@@ -12,7 +12,6 @@ def app():
     """)
     image = Image.open('C:/Users/DELL/github/Web_2.0/logo_ml_2.png')
     st.image(image)
-    st.title('Dataset')
     expander_bar = st.beta_expander('About')
     expander_bar.markdown("""
     * **Python libraries:** streamlit, pandas, numpy, PIL
