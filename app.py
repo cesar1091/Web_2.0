@@ -3,6 +3,7 @@ from multiapp import MultiApp
 from apps import ventas_dist, prediccion_2021
 
 # import your app modules here
+
 app = MultiApp()
 st.set_page_config(layout="wide")
 st.markdown("""

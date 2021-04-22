@@ -34,10 +34,17 @@ def app():
         chart_data_1 = pd.DataFrame(df_selected[df_selected['CodigoDistribuidor']==i][['Ventas_acumuladas','prediccion']],columns=['Ventas_acumuladas','prediccion'])
         chart_data_1.index = pd.to_datetime(df_selected[df_selected['CodigoDistribuidor']==i]['CodigoFecha'])
         col2.line_chart(chart_data_1)
+        chart_data_1_1 = pd.DataFrame(df_selected[df_selected['CodigoDistribuidor']==i][['prediccion_ventas','Ventas']],columns=['prediccion_ventas','Ventas'])
+        chart_data_1_1.index = pd.to_datetime(df_selected[df_selected['CodigoDistribuidor']==i]['CodigoFecha'])
+        col2.line_chart(chart_data_1_1)
 
     col3.subheader('Prediccion - DataFrame')
+    data_today = pd.read_csv('C:/Users/DELL/github/Web_2.0/apps/data_today.csv',index_col=0)
+
     for i in dist_select:
         col3.subheader(i)
-        chart_data_2 = pd.DataFrame(df_selected[df_selected['CodigoDistribuidor']==i][['Ventas_acumuladas','prediccion']],columns=['Ventas_acumuladas','prediccion'])
-        chart_data_2.index = pd.to_datetime(df_selected[df_selected['CodigoDistribuidor']==i]['CodigoFecha'])
-        col3.dataframe(chart_data_1)
+        dataframe = pd.DataFrame()
+        dataframe['Ventas acumuladas de ayer'] = data_today[data_today['CodigoDistribuidor']==i]['Ventas_acumuladas_last_1'].tail(1)
+        dataframe['Ventas a realizar el día de hoy'] = data_today[data_today['CodigoDistribuidor']==i]['prediccion'].tail(1) - dataframe['Ventas acumuladas de ayer']
+        #chart_data_2 = pd.DataFrame(df_selected[df_selected['CodigoDistribuidor']==i][['Ventas_acumuladas','prediccion']],columns=['Ventas_acumuladas','prediccion'])
+        col3.dataframe(dataframe)
